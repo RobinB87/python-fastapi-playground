@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Category(Enum):
@@ -9,10 +9,10 @@ class Category(Enum):
 
 
 class Item(BaseModel):
-    name: str
-    price: float
-    count: int
-    id: int
+    name: str = Field(min_length=1)
+    price: float = Field(gt=0)
+    count: int = Field(gt=0)
+    id: int = Field(ge=0)
     category: Category
 
 

@@ -63,3 +63,13 @@ def test_delete_item():
 def test_delete_item_returns_404():
     response = client.delete(f"{base_path}/99")
     assert response.status_code == 404
+
+def test_add_item_invalid_fields_returns_422():
+    response = client.post(base_path, json={
+        "name": "",
+        "price": -1,
+        "count": 0,
+        "id": 4,
+        "category": "tools"
+    })
+    assert response.status_code == 422
