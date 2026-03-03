@@ -1,0 +1,1 @@
+Small BE project to try out FastAPI a bit
