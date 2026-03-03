@@ -41,3 +41,25 @@ def test_add_item_duplicate_returns_400():
         "category": "tools"
     })
     assert response.status_code == 400
+
+def test_update_item():
+    response = client.put(f"{base_path}/1", params={"price": 7.99})
+    assert response.status_code == 200
+    assert response.json()["updated"]["price"] == 7.99
+
+def test_update_item_no_params_returns_400():
+    response = client.put(f"{base_path}/1")
+    assert response.status_code == 400
+
+def test_update_item_returns_404():
+    response = client.put(f"{base_path}/99", params={"name": "Ghost"})
+    assert response.status_code == 404
+
+def test_delete_item():
+    response = client.delete(f"{base_path}/2")
+    assert response.status_code == 200
+    assert response.json()["deleted"]["name"] == "Nails"
+
+def test_delete_item_returns_404():
+    response = client.delete(f"{base_path}/99")
+    assert response.status_code == 404

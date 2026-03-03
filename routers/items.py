@@ -48,3 +48,42 @@ def add_item(item: Item) -> dict[str, Item]:
         raise HTTPException(status_code=400, detail=f"Item with {item.id=} already exists.")
     items[item.id] = item
     return {"added": item}
+
+
+@router.put("/{id}")
+def update(
+    id: int,
+    name: str | None = None,
+    price: float | None = None,
+    count: int | None = None,
+) -> dict[str, Item]:
+
+    if id not in items:
+        raise HTTPException(status_code=404, detail=f"Item with {id=} does not exist.")
+    
+    if all(info is None for info in (name, price, count)):
+        raise HTTPException(
+            status_code=400, detail="No parameters provided for update."
+        )
+
+    item = items[id]
+    if name is not None:
+        item.name = name
+    if price is not None:
+        item.price = price
+    if count is not None:
+        item.count = count
+
+    return {"updated": item}
+
+
+@router.delete("/{id}")
+def delete_item(id: int) -> dict[str, Item]:
+
+    if id not in items:
+        raise HTTPException(
+            status_code=404, detail=f"Item with {id=} does not exist."
+        )
+
+    item = items.pop(id)
+    return {"deleted": item}
