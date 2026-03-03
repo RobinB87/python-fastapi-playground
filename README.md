@@ -21,6 +21,22 @@ pip install fastapi "uvicorn[standard]"
 ```
 
 4. Run
+
 ```bash
 uvicorn main:app --reload
+```
+
+# Testing
+
+1. Install pytest and httpx
+
+```bash
+pip install pytest
+pip install httpx
+```
+
+2. Run tests
+
+```bash
+python -m pytest
 ```
